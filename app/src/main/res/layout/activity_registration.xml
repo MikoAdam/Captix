@@ -4,9 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
+    tools:context=".user_authentication.RegistrationActivity">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/emailRegistrationTextView"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Your email address"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/userNameRegistrationEditText"
         android:layout_width="250dp"
         android:layout_height="50dp"
@@ -19,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailRegistrationTextView" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/passwordRegistrationEditText"
         android:layout_width="250dp"
         android:layout_height="50dp"
@@ -32,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userNameRegistrationEditText" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegistration"
         android:layout_width="250dp"
         android:layout_height="50dp"
@@ -43,19 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordRegistrationEditText" />
 
-    <EditText
-        android:id="@+id/emailRegistrationTextView"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="Your email address"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNavigateLogIn"
         android:layout_width="250dp"
         android:layout_height="50dp"

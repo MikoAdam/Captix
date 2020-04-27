@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.captix.http_requests.photo_request.PhotoURLResponse
+import com.captix.http_requests.image_request.ImageResponse
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
 import kotlinx.android.synthetic.main.activity_user_photos.*
@@ -12,9 +12,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserPhotosActivity : AppCompatActivity() {
+class ViewImagesActivity : AppCompatActivity() {
 
-    val urls: MutableList<PhotoURLResponse> = mutableListOf<PhotoURLResponse>()
+    val urls: MutableList<ImageResponse> = mutableListOf<ImageResponse>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +28,11 @@ class UserPhotosActivity : AppCompatActivity() {
         var picPosition = 0
 
         mAPIService.getPhotosURL().enqueue(object :
-            Callback<List<PhotoURLResponse>> {
+            Callback<List<ImageResponse>> {
 
             override fun onResponse(
-                call: Call<List<PhotoURLResponse>>,
-                response: Response<List<PhotoURLResponse>>
+                call: Call<List<ImageResponse>>,
+                response: Response<List<ImageResponse>>
             ) {
                 val URLResponse = response.body()
 
@@ -40,12 +40,13 @@ class UserPhotosActivity : AppCompatActivity() {
                     for (i in URLResponse) {
                         urls.add(i)
                     }
+                    PicNumberTextView.text = "${urls.size}/0 "
                 }
 
                 getPicWithGlide(picPosition)
             }
 
-            override fun onFailure(call: Call<List<PhotoURLResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ImageResponse>>, t: Throwable) {
                 val text = "Image load fail try again"
                 val duration = Toast.LENGTH_LONG
 
@@ -58,6 +59,7 @@ class UserPhotosActivity : AppCompatActivity() {
             if (picPosition > 0) {
                 picPosition--
                 getPicWithGlide(picPosition)
+                PicNumberTextView.text = "${urls.size}/${picPosition + 1} "
             } else {
                 val text = "There are no more pics"
                 val duration = Toast.LENGTH_LONG
@@ -67,11 +69,11 @@ class UserPhotosActivity : AppCompatActivity() {
             }
         }
 
-
         btnImage2.setOnClickListener {
-            if (picPosition < urls.size) {
+            if (picPosition < urls.size - 1) {
                 picPosition++
                 getPicWithGlide(picPosition)
+                PicNumberTextView.text = "${urls.size}/${picPosition + 1} "
             } else {
                 val text = "There are no more pics"
                 val duration = Toast.LENGTH_LONG

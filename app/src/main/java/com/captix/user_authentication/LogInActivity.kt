@@ -1,9 +1,11 @@
-package com.captix
+package com.captix.user_authentication
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.captix.R
+import com.captix.ViewImagesActivity
 import com.captix.http_requests.login.LoginRequest
 import com.captix.http_requests.login.LoginResponse
 import com.captix.retrofit.APIService
@@ -53,7 +55,7 @@ class LogInActivity : AppCompatActivity() {
                         if (loginResponse != null) {
                             token = loginResponse.jwt
 
-                            val intent = Intent(this@LogInActivity, UserPhotosActivity::class.java)
+                            val intent = Intent(this@LogInActivity, ViewImagesActivity::class.java)
                             startActivity(intent)
                         }
                     }

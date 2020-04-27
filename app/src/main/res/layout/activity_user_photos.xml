@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserPhotosActivity">
+    tools:context=".ViewImagesActivity">
 
     <Button
         android:id="@+id/btnImage1"
@@ -35,4 +35,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/PicNumberTextView"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="240dp"
+        android:text="0/0"
+        app:layout_constraintBottom_toTopOf="@+id/btnImage1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UserImagesImageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

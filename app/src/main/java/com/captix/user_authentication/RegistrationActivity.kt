@@ -1,9 +1,10 @@
-package com.captix
+package com.captix.user_authentication
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.captix.R
 import com.captix.http_requests.registration.Registration
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
@@ -36,7 +37,6 @@ class RegistrationActivity : AppCompatActivity() {
                     call: Call<Registration>,
                     response: Response<Registration>
                 ) {
-
                     if (response.isSuccessful) {
                         val text = "Registration success"
                         val duration = Toast.LENGTH_LONG
@@ -57,10 +57,7 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
         btnNavigateLogIn.setOnClickListener {
-/*            val intent = Intent(this, LogInActivity::class.java)
-            startActivity(intent)*/
-
-            val intent = Intent(this, UserPhotosActivity::class.java)
+            val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
         }
     }

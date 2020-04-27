@@ -1,8 +1,8 @@
-package com.captix.http_requests.photo_request
+package com.captix.http_requests.image_request
 
 import com.google.gson.annotations.SerializedName
 
-data class PhotoURLResponse(
+data class ImageResponse(
     @SerializedName("_id") var id: String,
     @SerializedName("title") var title: String,
     @SerializedName("url") var url: String
