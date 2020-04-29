@@ -1,6 +1,5 @@
 package com.captix.view_images
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import com.captix.R
 import com.captix.model.Post
 import kotlinx.android.synthetic.main.post_item.view.*
 
-class postsRecyclerViewAdapter : RecyclerView.Adapter<postsRecyclerViewAdapter.PostViewHolder>() {
+class PostsRecyclerViewAdapter : RecyclerView.Adapter<PostsRecyclerViewAdapter.PostViewHolder>() {
 
     private val postList = mutableListOf<Post>()
-
     var itemClickListener: PostItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -69,5 +67,4 @@ class postsRecyclerViewAdapter : RecyclerView.Adapter<postsRecyclerViewAdapter.P
     interface PostItemClickListener {
         fun onItemClick(post: Post)
     }
-
 }

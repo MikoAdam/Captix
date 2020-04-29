@@ -3,17 +3,19 @@ package com.captix.view_images
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.captix.R
 import com.captix.http_requests.image_request.ImageResponse
+import com.captix.image_upload.ImageUploadActivity
 import com.captix.model.Post
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
 import com.captix.user_authentication.LogInActivity
 import com.shashank.sony.fancytoastlib.FancyToast
-import kotlinx.android.synthetic.main.activity_user_photos.*
+import kotlinx.android.synthetic.main.activity_view_images.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,21 +23,27 @@ import retrofit2.Response
 class ViewImagesActivity : AppCompatActivity() {
 
     private val postsFromServer: MutableList<Post> = mutableListOf()
-    private lateinit var postsRecyclerViewAdapter: postsRecyclerViewAdapter
+    private lateinit var PostsRecyclerViewAdapter: PostsRecyclerViewAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private fun setupRecyclerView() {
-        postsRecyclerViewAdapter = postsRecyclerViewAdapter()
-        postsRecyclerViewAdapter.setPosts(postsFromServer)
-        recyclerView.adapter = postsRecyclerViewAdapter
+        PostsRecyclerViewAdapter = PostsRecyclerViewAdapter()
+        PostsRecyclerViewAdapter.setPosts(postsFromServer)
+        recyclerView.adapter = PostsRecyclerViewAdapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_photos)
+        setContentView(R.layout.activity_view_images)
 
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
+
+        val fab: View = findViewById(R.id.floatingActionButtonUploadImage)
+        fab.setOnClickListener {
+            val intent = Intent(this@ViewImagesActivity, ImageUploadActivity::class.java)
+            startActivity(intent)
+        }
 
         val mAPIService: APIService?
         mAPIService = ApiUtils.apiService

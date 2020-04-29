@@ -17,10 +17,10 @@ import retrofit2.Response
 
 class LogInActivity : AppCompatActivity() {
 
-    //the token you need to see the images and upload
     companion object {
         lateinit var token: String
             private set
+        var userName: String = "Guest"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,6 @@ class LogInActivity : AppCompatActivity() {
         mAPIService = ApiUtils.apiService
 
         btnLogIn.setOnClickListener {
-
             val logInRequest = getLogInData()
             sendLogInRequest(mAPIService, logInRequest)
         }
@@ -48,6 +47,8 @@ class LogInActivity : AppCompatActivity() {
 
                     if (loginResponse != null) {
                         token = loginResponse.jwt
+
+                        userName = userNameLogIneditText.text.toString()
 
                         val intent = Intent(this@LogInActivity, ViewImagesActivity::class.java)
                         startActivity(intent)

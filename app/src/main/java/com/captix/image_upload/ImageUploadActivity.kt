@@ -12,6 +12,8 @@ import com.captix.http_requests.image_upload.ImageUploadResponse
 import com.captix.http_requests.image_upload.ImageUploadSendBack
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
+import com.captix.user_authentication.LogInActivity.Companion.userName
+import com.captix.view_images.ViewImagesActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_image_upload.*
@@ -42,8 +44,6 @@ class ImageUploadActivity : AppCompatActivity() {
         btnUpload.setOnClickListener {
             if (this::imageURI.isInitialized) {
                 uploadImage(mAPIService)
-
-
             } else {
                 FancyToast.makeText(
                     applicationContext,
@@ -70,6 +70,9 @@ class ImageUploadActivity : AppCompatActivity() {
                         FancyToast.SUCCESS,
                         false
                     ).show()
+
+                    val intent = Intent(this@ImageUploadActivity, ViewImagesActivity::class.java)
+                    startActivity(intent)
                 }
 
                 override fun onFailure(call: Call<ImageUploadSendBack>, t: Throwable) {
@@ -107,11 +110,11 @@ class ImageUploadActivity : AppCompatActivity() {
                     val url = response.body()?.imageUrl
                     if (url != null) {
                         uploadAnswer = ImageUploadSendBack(
-                            "someUserName",
+                            userName,
                             url,
-                            "someCaption",
-                            "someDescription",
-                            "someCategoryName"
+                            editTextTitle.text.toString(),
+                            textInputEditTextDescription.text.toString(),
+                            editTextTitle.text.toString()
                         )
                         uploadImageAnswer(mAPIService, uploadAnswer)
                     }
@@ -140,7 +143,7 @@ class ImageUploadActivity : AppCompatActivity() {
                 val fileUri = data?.data
                 if (fileUri != null)
                     imageURI = fileUri
-                ivImage.setImageURI(fileUri)
+                imageViewImagePreview.setImageURI(fileUri)
             }
             ImagePicker.RESULT_ERROR -> {
                 Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()

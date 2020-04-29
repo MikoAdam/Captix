@@ -27,7 +27,6 @@ class RegistrationActivity : AppCompatActivity() {
         mAPIService = ApiUtils.apiService
 
         btnRegistration.setOnClickListener {
-
             if (emailRegistrationTextView.text.toString().isValidEmail()) {
                 val registration =
                     createRegistrationData()
