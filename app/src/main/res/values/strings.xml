@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Captix</string>
+    <string name="title">Title</string>
+    <string name="user_name">User name</string>
+    <string name="image_content_description">Image of the user</string>
+    <string name="category">Category</string>
+    <string name="your_email_address">Your email address</string>
+    <string name="choose_an_username">Choose an username</string>
+    <string name="password">Password</string>
+    <string name="registration">Registration</string>
+    <string name="log_in">Log in</string>
+    <string name="captix_logo">Captix logo</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
 </resources>

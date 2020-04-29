@@ -59,4 +59,23 @@ dependencies {
 
     //Image Picker Library for Android
     implementation 'com.github.dhaval2404:imagepicker:1.7.1'
+
+    //ultimate recycle view
+    implementation 'com.marshalchen.ultimaterecyclerview:library:0.9.0'
+
+    //fancy toast
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
+
+    //kernburns view
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+
+    //gson converter
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //recyclerview
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    //cardview
+    implementation 'androidx.cardview:cardview:1.0.0'
+
 }

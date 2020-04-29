@@ -6,63 +6,110 @@
     android:layout_height="match_parent"
     tools:context=".user_authentication.RegistrationActivity">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/emailRegistrationTextView"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="Your email address"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/register_image" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/userNameRegistrationEditText"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="Choose an username"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailRegistrationTextView" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/passwordRegistrationEditText"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameRegistrationEditText" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailRegistrationTextView"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/rounded_edittext_upper"
+            android:drawablePadding="25dp"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="@string/your_email_address"
+            android:inputType="textEmailAddress"
+            android:paddingStart="20dp"
+            android:textColor="#333333"
+            android:textColorHint="#d8d8d8"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            tools:ignore="RtlSymmetry" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRegistration"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:text="Registration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordRegistrationEditText" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameRegistrationEditText"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edittext_middle"
+            android:drawablePadding="25dp"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="@string/choose_an_username"
+            android:inputType="textPersonName"
+            android:paddingStart="20dp"
+            android:textColor="#333333"
+            android:textColorHint="#d8d8d8"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailRegistrationTextView"
+            tools:ignore="RtlSymmetry" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnNavigateLogIn"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:text="Log in"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistration" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordRegistrationEditText"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edittext_bottom"
+            android:drawablePadding="25dp"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="20dp"
+            android:textColor="#333333"
+            android:textColorHint="#d8d8d8"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userNameRegistrationEditText"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegistration"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/registration"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordRegistrationEditText" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNavigateLogIn"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/log_in"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRegistration" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:contentDescription="@string/captix_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo_with_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

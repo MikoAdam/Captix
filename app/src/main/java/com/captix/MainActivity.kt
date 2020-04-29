@@ -6,9 +6,12 @@ import android.os.Bundle
 import com.captix.image_upload.ImageUploadActivity
 import com.captix.user_authentication.LogInActivity
 import com.captix.user_authentication.RegistrationActivity
+import com.captix.view_images.ViewImagesActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    //temporary activity, online for faster testing
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,6 +1,5 @@
 package com.captix.image_upload
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -8,20 +7,30 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.captix.R
+import com.captix.http_requests.image_upload.ImageUploadResponse
+import com.captix.retrofit.APIService
+import com.captix.retrofit.ApiUtils
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.livinglifetechway.quickpermissions.annotations.WithPermissions
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_image_upload.*
-import okhttp3.ResponseBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 
 class ImageUploadActivity : AppCompatActivity() {
 
-    companion object {
-        lateinit var imageURI: Uri
-    }
+    private lateinit var imageURI: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_upload)
+
+        val mAPIService: APIService?
+        mAPIService = ApiUtils.apiService
 
         btnCapture.setOnClickListener {
             ImagePicker.with(this)
@@ -29,31 +38,65 @@ class ImageUploadActivity : AppCompatActivity() {
         }
 
         btnUpload.setOnClickListener {
-            val galleryInteractor = GalleryInteractor()
-
-            galleryInteractor.uploadImage(
-                fileUri = imageURI,
-                onSuccess = this::uploadSuccess,
-                onError = this::uploadError
-            )
+            if (this::imageURI.isInitialized) {
+                uploadImage(mAPIService)
+            } else {
+                FancyToast.makeText(
+                    applicationContext,
+                    "First choose an image",
+                    Toast.LENGTH_SHORT,
+                    FancyToast.WARNING,
+                    false
+                ).show()
+            }
         }
     }
 
-    @WithPermissions(
-        permissions = [Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE]
-    )
+    private fun uploadImage(mAPIService: APIService) {
+        val file = File(imageURI.path.toString())
+        val requestFile = file.asRequestBody(APIService.MULTIPART_FORM_DATA.toMediaTypeOrNull())
+        val body =
+            MultipartBody.Part.createFormData(
+                APIService.PHOTO_MULTIPART_KEY_IMG,
+                file.name,
+                requestFile
+            )
 
+        mAPIService.uploadImage(body)
+            .enqueue(object : Callback<ImageUploadResponse> {
+                override fun onResponse(
+                    call: Call<ImageUploadResponse>,
+                    response: Response<ImageUploadResponse>
+                ) {
+                    var s = "error on success"
+                    val imageUploadResponse = response.body()
 
-    private fun uploadSuccess(responseBody: ResponseBody) {
-        Toast.makeText(this, "Successfully uploaded!", Toast.LENGTH_SHORT).show()
-        finish()
+                    if (imageUploadResponse != null) {
+                        s = imageUploadResponse.ImageUrl
+                    }
+
+                    FancyToast.makeText(
+                        applicationContext,
+                        s,
+                        Toast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false
+                    ).show()
+                }
+
+                override fun onFailure(call: Call<ImageUploadResponse>, t: Throwable) {
+                    FancyToast.makeText(
+                        applicationContext,
+                        "Upload fail try again",
+                        Toast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                }
+            })
     }
 
-    private fun uploadError(e: Throwable) {
-        Toast.makeText(this, "Error during uploading photo!", Toast.LENGTH_SHORT).show()
-        e.printStackTrace()
-    }
-
+    //after choosing a image this set the uri and set on imageView
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
@@ -62,7 +105,6 @@ class ImageUploadActivity : AppCompatActivity() {
                 if (fileUri != null)
                     imageURI = fileUri
                 ivImage.setImageURI(fileUri)
-
             }
             ImagePicker.RESULT_ERROR -> {
                 Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
