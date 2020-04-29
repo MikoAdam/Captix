@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.captix.R
 import com.captix.http_requests.image_upload.ImageUploadResponse
+import com.captix.http_requests.image_upload.ImageUploadSendBack
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -40,6 +42,8 @@ class ImageUploadActivity : AppCompatActivity() {
         btnUpload.setOnClickListener {
             if (this::imageURI.isInitialized) {
                 uploadImage(mAPIService)
+
+
             } else {
                 FancyToast.makeText(
                     applicationContext,
@@ -50,6 +54,37 @@ class ImageUploadActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun uploadImageAnswer(mAPIService: APIService, uploadAnswer: ImageUploadSendBack) {
+        mAPIService.uploadImageAnswer(uploadAnswer)
+            .enqueue(object : Callback<ImageUploadSendBack> {
+                override fun onResponse(
+                    call: Call<ImageUploadSendBack>,
+                    response: Response<ImageUploadSendBack>
+                ) {
+                    FancyToast.makeText(
+                        applicationContext,
+                        "Successfully uploaded",
+                        Toast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false
+                    ).show()
+                }
+
+                override fun onFailure(call: Call<ImageUploadSendBack>, t: Throwable) {
+                    val error = t.cause.toString()
+                    Log.d("image upload", error)
+
+                    FancyToast.makeText(
+                        applicationContext,
+                        "Upload fail try again",
+                        Toast.LENGTH_SHORT,
+                        FancyToast.ERROR,
+                        false
+                    ).show()
+                }
+            })
     }
 
     private fun uploadImage(mAPIService: APIService) {
@@ -68,23 +103,24 @@ class ImageUploadActivity : AppCompatActivity() {
                     call: Call<ImageUploadResponse>,
                     response: Response<ImageUploadResponse>
                 ) {
-                    var s = "error on success"
-                    val imageUploadResponse = response.body()
-
-                    if (imageUploadResponse != null) {
-                        s = imageUploadResponse.ImageUrl
+                    val uploadAnswer: ImageUploadSendBack
+                    val url = response.body()?.imageUrl
+                    if (url != null) {
+                        uploadAnswer = ImageUploadSendBack(
+                            "someUserName",
+                            url,
+                            "someCaption",
+                            "someDescription",
+                            "someCategoryName"
+                        )
+                        uploadImageAnswer(mAPIService, uploadAnswer)
                     }
-
-                    FancyToast.makeText(
-                        applicationContext,
-                        s,
-                        Toast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false
-                    ).show()
                 }
 
                 override fun onFailure(call: Call<ImageUploadResponse>, t: Throwable) {
+                    val error = t.cause.toString()
+                    Log.d("image upload", error)
+
                     FancyToast.makeText(
                         applicationContext,
                         "Upload fail try again",

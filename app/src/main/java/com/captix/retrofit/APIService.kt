@@ -2,10 +2,12 @@ package com.captix.retrofit
 
 import com.captix.http_requests.image_request.ImageResponse
 import com.captix.http_requests.image_upload.ImageUploadResponse
+import com.captix.http_requests.image_upload.ImageUploadSendBack
 import com.captix.http_requests.login.LoginRequest
 import com.captix.http_requests.login.LoginResponse
 import com.captix.http_requests.registration.Registration
 import okhttp3.MultipartBody
+import okhttp3.Response
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -28,6 +30,9 @@ interface APIService {
     @Multipart
     @POST("uploadFile")
     fun uploadImage(@Part file: MultipartBody.Part): Call<ImageUploadResponse>
+
+    @POST("posts")
+    fun uploadImageAnswer(@Body answer: ImageUploadSendBack): Call<ImageUploadSendBack>
 
 }
 

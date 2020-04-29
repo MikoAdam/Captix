@@ -20,11 +20,9 @@ import retrofit2.Response
 
 class ViewImagesActivity : AppCompatActivity() {
 
-    //the images asked from the server will be here
     private val postsFromServer: MutableList<Post> = mutableListOf()
     private lateinit var postsRecyclerViewAdapter: postsRecyclerViewAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
-
 
     private fun setupRecyclerView() {
         postsRecyclerViewAdapter = postsRecyclerViewAdapter()
@@ -39,7 +37,6 @@ class ViewImagesActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
 
-        //api service for http request
         val mAPIService: APIService?
         mAPIService = ApiUtils.apiService
 
@@ -70,7 +67,6 @@ class ViewImagesActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<ImageResponse>>, t: Throwable) {
-
                 val error = t.cause.toString()
                 Log.d("image download", error)
 
@@ -83,14 +79,6 @@ class ViewImagesActivity : AppCompatActivity() {
                 ).show()
             }
         })
-
-/*        val token = LogInActivity.token
-        val url = "https://moodle.htwchur.ch/pluginfile.php/124614/mod_page/content/4/example.jpg"
-        val glideUrl = GlideUrl(url) { mapOf(Pair("Authorization", "Bearer $token")) }
-
-        Glide.with(this)
-            .load(glideUrl)
-            .into(UserImagesImageView)*/
     }
 
     override fun onBackPressed() {
@@ -106,12 +94,4 @@ class ViewImagesActivity : AppCompatActivity() {
         builder.setNegativeButton(android.R.string.no) { _, _ -> }
         builder.show()
     }
-
-
-/*    private fun getPicWithGlide(position: Int) {
-        val url = postsFromServer[position].imageUrl
-        Glide.with(this)
-            .load(url)
-            .into(UserImagesImageView)
-    }*/
 }
