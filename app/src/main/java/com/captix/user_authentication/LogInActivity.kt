@@ -30,9 +30,21 @@ class LogInActivity : AppCompatActivity() {
         val mAPIService: APIService?
         mAPIService = ApiUtils.apiService
 
+/*        val kenburnsvie = findViewById<KenBurnsView>(R.id.kenBurnsImage)
+        val file = File("drawable/login_image.png")
+        val bitmap = BitmapFactory.decodeFile(file.path)
+        val uri: Uri = Uri.parse("drawable/login_image.png")
+        kenburnsvie.setImageURI(uri)
+        kenburnsvie.restart()*/
+
         btnLogIn.setOnClickListener {
             val logInRequest = getLogInData()
             sendLogInRequest(mAPIService, logInRequest)
+        }
+
+        btnNavigateToRegistration.setOnClickListener {
+            val intent = Intent(this@LogInActivity, RegistrationActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -48,7 +60,7 @@ class LogInActivity : AppCompatActivity() {
                     if (loginResponse != null) {
                         token = loginResponse.jwt
 
-                        userName = userNameLogIneditText.text.toString()
+                        userName = userNameLogInEditText.text.toString()
 
                         val intent = Intent(this@LogInActivity, ViewImagesActivity::class.java)
                         startActivity(intent)
@@ -68,7 +80,7 @@ class LogInActivity : AppCompatActivity() {
     }
 
     private fun getLogInData(): LoginRequest {
-        val userName: String = userNameLogIneditText.text.toString()
+        val userName: String = userNameLogInEditText.text.toString()
         val password: String = passwordLogInEditText.text.toString()
 
         return LoginRequest(userName, password)

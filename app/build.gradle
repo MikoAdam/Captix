@@ -77,6 +77,4 @@ dependencies {
 
     //cardview
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.android.support:design:28.0.0'
-
 }

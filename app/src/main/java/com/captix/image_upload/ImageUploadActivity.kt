@@ -91,14 +91,7 @@ class ImageUploadActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(mAPIService: APIService) {
-        val file = File(imageURI.path.toString())
-        val requestFile = file.asRequestBody(APIService.MULTIPART_FORM_DATA.toMediaTypeOrNull())
-        val body =
-            MultipartBody.Part.createFormData(
-                APIService.PHOTO_MULTIPART_KEY_IMG,
-                file.name,
-                requestFile
-            )
+        val body = getImageBody()
 
         mAPIService.uploadImage(body)
             .enqueue(object : Callback<ImageUploadResponse> {
@@ -133,6 +126,17 @@ class ImageUploadActivity : AppCompatActivity() {
                     ).show()
                 }
             })
+    }
+
+    private fun getImageBody(): MultipartBody.Part {
+        val file = File(imageURI.path.toString())
+        val requestFile = file.asRequestBody(APIService.MULTIPART_FORM_DATA.toMediaTypeOrNull())
+
+        return MultipartBody.Part.createFormData(
+            APIService.PHOTO_MULTIPART_KEY_IMG,
+            file.name,
+            requestFile
+        )
     }
 
     //after choosing a image this set the uri and set on imageView

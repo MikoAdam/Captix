@@ -6,7 +6,7 @@
     <string name="category">Category</string>
     <string name="your_email_address">Your email address</string>
     <string name="choose_an_username">Choose an username</string>
-    <string name="registration">Registration</string>
+    <string name="registration">Register</string>
     <string name="log_in">Log in</string>
     <string name="captix_logo">Captix logo</string>
     <string name="password">Password</string>
@@ -16,4 +16,6 @@
     <string name="upload">Upload</string>
     <string name="capture">Capture</string>
     <string name="image_to_upload">image to upload</string>
+    <string name="facecbook">Facecbook</string>
+    <string name="google">Google</string>
 </resources>

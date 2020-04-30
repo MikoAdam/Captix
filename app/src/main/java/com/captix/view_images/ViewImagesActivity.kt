@@ -23,13 +23,13 @@ import retrofit2.Response
 class ViewImagesActivity : AppCompatActivity() {
 
     private val postsFromServer: MutableList<Post> = mutableListOf()
-    private lateinit var PostsRecyclerViewAdapter: PostsRecyclerViewAdapter
+    private lateinit var postsRecyclerViewAdapter: PostsRecyclerViewAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private fun setupRecyclerView() {
-        PostsRecyclerViewAdapter = PostsRecyclerViewAdapter()
-        PostsRecyclerViewAdapter.setPosts(postsFromServer)
-        recyclerView.adapter = PostsRecyclerViewAdapter
+        postsRecyclerViewAdapter = PostsRecyclerViewAdapter()
+        postsRecyclerViewAdapter.setPosts(postsFromServer)
+        recyclerView.adapter = postsRecyclerViewAdapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
