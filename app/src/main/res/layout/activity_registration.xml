@@ -7,26 +7,29 @@
     tools:context=".user_authentication.RegistrationActivity">
 
     <com.flaviofaria.kenburnsview.KenBurnsView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/registration_image" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/kenBurnsImageRegistration"
+        android:layout_width="393dp"
+        android:layout_height="713dp"
+        android:src="@drawable/background6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/kenBurnsImageRegistration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/kenBurnsImageRegistration"
+        app:layout_constraintTop_toTopOf="@+id/kenBurnsImageRegistration">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailRegistrationTextView"
-            android:layout_width="288dp"
+            android:layout_width="296dp"
             android:layout_height="48dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/rounded_edittext_upper"
             android:drawablePadding="25dp"
             android:ems="10"
@@ -44,7 +47,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/userNameRegistrationEditText"
-            android:layout_width="288dp"
+            android:layout_width="296dp"
             android:layout_height="48dp"
             android:autofillHints=""
             android:background="@drawable/rounded_edittext_middle"
@@ -64,7 +67,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordRegistrationEditText"
-            android:layout_width="288dp"
+            android:layout_width="296dp"
             android:layout_height="48dp"
             android:autofillHints=""
             android:background="@drawable/rounded_edittext_bottom"
@@ -84,9 +87,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistration"
-            android:layout_width="288dp"
+            android:layout_width="296dp"
             android:layout_height="48dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:text="@string/registration"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,10 +98,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNavigateLogIn"
-            android:layout_width="288dp"
+            android:layout_width="296dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
-            android:text="Already signed up?"
+            android:text="@string/already_signed_up"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,9 +110,9 @@
 
         <ImageView
             android:id="@+id/imageViewCaptixLogo"
-            android:layout_width="240dp"
+            android:layout_width="248dp"
             android:layout_height="64dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="64dp"
             android:contentDescription="@string/captix_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,13 +123,15 @@
             android:id="@+id/btnGoogleRegistration"
             android:layout_width="136dp"
             android:layout_height="48dp"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:backgroundTint="#ffffff"
             android:drawableEnd="@drawable/google_icon"
             android:text="@string/google"
             android:textColor="#000000"
             android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnFacebookRegistraration"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnNavigateLogIn" />
 
@@ -134,15 +139,16 @@
             android:id="@+id/btnFacebookRegistraration"
             android:layout_width="136dp"
             android:layout_height="48dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="52dp"
+            android:layout_marginStart="24dp"
             android:backgroundTint="#3b5998"
             android:drawableEnd="@drawable/icon_facebook"
             android:text="@string/facecbook"
             android:textColor="#ffffff"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnNavigateLogIn" />
+            app:layout_constraintBottom_toBottomOf="@+id/btnGoogleRegistration"
+            app:layout_constraintStart_toEndOf="@+id/btnGoogleRegistration"
+            app:layout_constraintTop_toTopOf="@+id/btnGoogleRegistration"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

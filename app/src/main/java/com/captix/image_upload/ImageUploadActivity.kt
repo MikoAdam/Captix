@@ -12,6 +12,7 @@ import com.captix.http_requests.image_upload.ImageUploadResponse
 import com.captix.http_requests.image_upload.ImageUploadSendBack
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
+import com.captix.user_authentication.LogInActivity.Companion.token
 import com.captix.user_authentication.LogInActivity.Companion.userName
 import com.captix.view_images.ViewImagesActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -57,7 +58,7 @@ class ImageUploadActivity : AppCompatActivity() {
     }
 
     private fun uploadImageAnswer(mAPIService: APIService, uploadAnswer: ImageUploadSendBack) {
-        mAPIService.uploadImageAnswer(uploadAnswer)
+        mAPIService.uploadImageAnswer(token, uploadAnswer)
             .enqueue(object : Callback<ImageUploadSendBack> {
                 override fun onResponse(
                     call: Call<ImageUploadSendBack>,
@@ -93,7 +94,7 @@ class ImageUploadActivity : AppCompatActivity() {
     private fun uploadImage(mAPIService: APIService) {
         val body = getImageBody()
 
-        mAPIService.uploadImage(body)
+        mAPIService.uploadImage(token, body)
             .enqueue(object : Callback<ImageUploadResponse> {
                 override fun onResponse(
                     call: Call<ImageUploadResponse>,
@@ -150,10 +151,22 @@ class ImageUploadActivity : AppCompatActivity() {
                 imageViewImagePreview.setImageURI(fileUri)
             }
             ImagePicker.RESULT_ERROR -> {
-                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                FancyToast.makeText(
+                    applicationContext,
+                    ImagePicker.getError(data),
+                    Toast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
             }
             else -> {
-                Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
+                FancyToast.makeText(
+                    applicationContext,
+                    "Task Cancelled",
+                    Toast.LENGTH_SHORT,
+                    FancyToast.INFO,
+                    false
+                ).show()
             }
         }
     }

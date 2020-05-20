@@ -9,6 +9,7 @@ import com.captix.http_requests.login.LoginResponse
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
 import com.captix.view_images.ViewImagesActivity
+import com.flaviofaria.kenburnsview.KenBurnsView
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_log_in.*
 import retrofit2.Call
@@ -18,7 +19,8 @@ import retrofit2.Response
 class LogInActivity : AppCompatActivity() {
 
     companion object {
-        lateinit var token: String
+         var token: String =""
+            get() = "Bearer $field"
             private set
         var userName: String = "Guest"
     }
@@ -30,22 +32,36 @@ class LogInActivity : AppCompatActivity() {
         val mAPIService: APIService?
         mAPIService = ApiUtils.apiService
 
-/*        val kenburnsvie = findViewById<KenBurnsView>(R.id.kenBurnsImage)
-        val file = File("drawable/login_image.png")
-        val bitmap = BitmapFactory.decodeFile(file.path)
-        val uri: Uri = Uri.parse("drawable/login_image.png")
-        kenburnsvie.setImageURI(uri)
-        kenburnsvie.restart()*/
-
         btnLogIn.setOnClickListener {
-            val logInRequest = getLogInData()
-            sendLogInRequest(mAPIService, logInRequest)
+            when {
+                userNameLogInEditText.text.toString().isEmpty() -> {
+                    userNameLogInEditText.requestFocus()
+                    userNameLogInEditText.error = "Please enter your user name"
+                }
+                passwordLogInEditText.text.toString().isEmpty() -> {
+                    passwordLogInEditText.requestFocus()
+                    passwordLogInEditText.error = "Please enter your password"
+                }
+                else -> {
+                    val logInRequest = getLogInData()
+                    sendLogInRequest(mAPIService, logInRequest)
+                }
+            }
         }
 
         btnNavigateToRegistration.setOnClickListener {
             val intent = Intent(this@LogInActivity, RegistrationActivity::class.java)
             startActivity(intent)
         }
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val kenBurnsView: KenBurnsView = findViewById(R.id.kenBurnsImage)
+        kenBurnsView.setImageResource(RegistrationActivity.resources.random())
+        kenBurnsView.restart()
     }
 
     private fun sendLogInRequest(mAPIService: APIService, logInRequest: LoginRequest) {
@@ -70,7 +86,7 @@ class LogInActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     FancyToast.makeText(
                         applicationContext,
-                        "Log in error, try again",
+                        "Server error, try again later",
                         FancyToast.LENGTH_SHORT,
                         FancyToast.ERROR,
                         false

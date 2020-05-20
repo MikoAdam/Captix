@@ -2,10 +2,11 @@ package com.captix.model
 
 data class Post(
     val username: String,
+    val id: String,
     val imageUrl: String,
     val caption: String,
-    //val comment: Comment,
-    val rating: Int,
+    val upvote: Int,
+    val downvote: Int,
     val dateOfCreation: String,
     val categoryName: String
 )

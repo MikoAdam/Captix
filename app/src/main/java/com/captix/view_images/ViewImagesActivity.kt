@@ -14,13 +14,14 @@ import com.captix.model.Post
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
 import com.captix.user_authentication.LogInActivity
+import com.captix.user_authentication.LogInActivity.Companion.token
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_view_images.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ViewImagesActivity : AppCompatActivity() {
+class ViewImagesActivity : AppCompatActivity(), PostsRecyclerViewAdapter.PostItemClickListener {
 
     private val postsFromServer: MutableList<Post> = mutableListOf()
     private lateinit var postsRecyclerViewAdapter: PostsRecyclerViewAdapter
@@ -30,6 +31,16 @@ class ViewImagesActivity : AppCompatActivity() {
         postsRecyclerViewAdapter = PostsRecyclerViewAdapter()
         postsRecyclerViewAdapter.setPosts(postsFromServer)
         recyclerView.adapter = postsRecyclerViewAdapter
+        postsRecyclerViewAdapter.itemClickListener = this
+    }
+
+    override fun onItemClick(post: Post) {
+
+        startActivity(
+            Intent(this, DetailViewActivity::class.java)
+                .putExtra("post_id", post.id)
+        )
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +59,7 @@ class ViewImagesActivity : AppCompatActivity() {
         val mAPIService: APIService?
         mAPIService = ApiUtils.apiService
 
-        mAPIService.getPhotosURL(/*token*/).enqueue(object :
+        mAPIService.getPhotosURL(token).enqueue(object :
             Callback<List<ImageResponse>> {
 
             override fun onResponse(
@@ -64,7 +75,9 @@ class ViewImagesActivity : AppCompatActivity() {
                                 username = i.username,
                                 imageUrl = i.imageUrl,
                                 caption = i.caption,
-                                rating = i.rating,
+                                id = i._id,
+                                upvote = i.upvote,
+                                downvote = i.downvote,
                                 dateOfCreation = i.dateOfCreation,
                                 categoryName = i.categoryName
                             )

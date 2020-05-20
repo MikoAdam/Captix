@@ -8,6 +8,7 @@ import com.captix.R
 import com.captix.http_requests.registration.Registration
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
+import com.flaviofaria.kenburnsview.KenBurnsView
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_registration.*
 import retrofit2.Call
@@ -16,8 +17,13 @@ import retrofit2.Response
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private fun CharSequence.isValidEmail() =
-        !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    companion object {
+        val resources = listOf(
+            R.drawable.background1, R.drawable.background2,
+            R.drawable.background3, R.drawable.background4,
+            R.drawable.background5, R.drawable.background6
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +33,29 @@ class RegistrationActivity : AppCompatActivity() {
         mAPIService = ApiUtils.apiService
 
         btnRegistration.setOnClickListener {
-            if (emailRegistrationTextView.text.toString().isValidEmail()) {
-                val registration =
-                    createRegistrationData()
+            when {
+                emailRegistrationTextView.text.toString().isEmpty() -> {
+                    emailRegistrationTextView.requestFocus()
+                    emailRegistrationTextView.error = "Please enter your email address"
+                }
+                userNameRegistrationEditText.text.toString().isEmpty() -> {
+                    userNameRegistrationEditText.requestFocus()
+                    userNameRegistrationEditText.error = "Please enter your user name"
+                }
+                passwordRegistrationEditText.text.toString().isEmpty() -> {
+                    passwordRegistrationEditText.requestFocus()
+                    passwordRegistrationEditText.error = "Please enter your password"
+                }
+                else -> {
+                    if (emailRegistrationTextView.text.toString().isValidEmail()) {
+                        val registration = createRegistrationData()
 
-                sendRegistrationRequest(mAPIService, registration)
-            }else{
-                FancyToast.makeText(
-                    applicationContext,
-                    "Email address is invalid",
-                    FancyToast.LENGTH_SHORT,
-                    FancyToast.ERROR,
-                    false
-                ).show()
+                        sendRegistrationRequest(mAPIService, registration)
+                    } else {
+                        emailRegistrationTextView.requestFocus()
+                        emailRegistrationTextView.error = "Please enter valid email address"
+                    }
+                }
             }
         }
 
@@ -47,6 +63,13 @@ class RegistrationActivity : AppCompatActivity() {
             val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val kenBurnsView: KenBurnsView = findViewById(R.id.kenBurnsImageRegistration)
+        kenBurnsView.setImageResource(RegistrationActivity.resources.random())
+        kenBurnsView.restart()
     }
 
     private fun sendRegistrationRequest(mAPIService: APIService, registration: Registration) {
@@ -71,7 +94,7 @@ class RegistrationActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Registration>, t: Throwable) {
                 FancyToast.makeText(
                     applicationContext,
-                    "Registration fail try again",
+                    "Server error, try again later",
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false
@@ -87,4 +110,8 @@ class RegistrationActivity : AppCompatActivity() {
 
         return Registration(email, userName, password)
     }
+
+    private fun CharSequence.isValidEmail() =
+        !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
 }
