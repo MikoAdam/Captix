@@ -40,7 +40,7 @@ interface APIService {
         @Header("Authorization") authHeader: String,
         @Url url: String,
         @Body content: CommentUpload
-    ): Call<List<CommentResponse>>
+    ): Call<CommentResponse>
 
     @Multipart
     @POST("uploadFile")

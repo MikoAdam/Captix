@@ -5,8 +5,8 @@ data class Post(
     val id: String,
     val imageUrl: String,
     val caption: String,
-    val upvote: Int,
-    val downvote: Int,
+    val upVote: Int,
+    val downVote: Int,
     val dateOfCreation: String,
     val categoryName: String
 )

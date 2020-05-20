@@ -69,48 +69,30 @@ class DetailViewActivity : AppCompatActivity() {
 
         })
 
-        if (editTextComment.toString() != "") {
-            buttonSendComment.setOnClickListener {
+        buttonSendComment.setOnClickListener {
+            if (editTextComment.text.toString() != "") {
 
                 val comment = CommentUpload(editTextComment.text.toString())
-
                 mAPIService.sendComment(token, requestUrl, comment)
                     .enqueue(object :
-                        Callback<List<CommentResponse>> {
+                        Callback<CommentResponse> {
 
                         override fun onResponse(
-                            call: Call<List<CommentResponse>>,
-                            response: Response<List<CommentResponse>>
+                            call: Call<CommentResponse>,
+                            response: Response<CommentResponse>
                         ) {
-
                             val urlResponse = response.body()
 
                             if (urlResponse != null) {
-                                for (i in urlResponse) {
 
-                                    var commentIsNew = true
-
-                                    // avoid adding the same comment again
-                                    for (j in comments) {
-                                        if (j != null) {
-                                            if (j._id == i._id) {
-                                                commentIsNew = false
-                                            }
-                                        }
-                                    }
-
-                                    if (commentIsNew) {
-                                        comments.add(
-                                            Comment(
-                                                _id = i._id,
-                                                username = i.username,
-                                                content = i.content
-                                            )
-                                        )
-                                    }
-                                }
+                                comments.add(
+                                    Comment(
+                                        _id = urlResponse._id,
+                                        username = urlResponse.username,
+                                        content = urlResponse.content
+                                    )
+                                )
                             }
-
                             showComments()
 
                             FancyToast.makeText(
@@ -120,34 +102,39 @@ class DetailViewActivity : AppCompatActivity() {
                                 FancyToast.SUCCESS,
                                 false
                             ).show()
+
                         }
 
-                        override fun onFailure(call: Call<List<CommentResponse>>, t: Throwable) {
-                            val error = t.cause.toString()
-                            Log.d("comment download", error)
-
-/*                            FancyToast.makeText(
+                        override fun onFailure(call: Call<CommentResponse>, t: Throwable) {
+                            FancyToast.makeText(
                                 applicationContext,
                                 "Server error",
                                 FancyToast.LENGTH_SHORT,
                                 FancyToast.ERROR,
                                 false
-                            ).show()*/
-
-                            showComments()
+                            ).show()
                         }
                     })
-                showComments()
+
                 editTextComment.text.clear()
+            } else {
+                FancyToast.makeText(
+                    applicationContext,
+                    "First write something",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.ERROR,
+                    false
+                ).show()
             }
         }
+
     }
 
     fun showComments() {
         var commentsTry = ""
         for (i in comments) {
             if (i != null) {
-                commentsTry += "- " + i.username + ": " + i.content.toString() +"\n"
+                commentsTry += "- " + i.username + ": " + i.content.toString() + "\n"
             }
         }
 

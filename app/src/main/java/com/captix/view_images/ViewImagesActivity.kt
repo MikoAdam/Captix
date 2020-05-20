@@ -76,8 +76,8 @@ class ViewImagesActivity : AppCompatActivity(), PostsRecyclerViewAdapter.PostIte
                                 imageUrl = i.imageUrl,
                                 caption = i.caption,
                                 id = i._id,
-                                upvote = i.upvote,
-                                downvote = i.downvote,
+                                upVote = i.upVote,
+                                downVote = i.downVote,
                                 dateOfCreation = i.dateOfCreation,
                                 categoryName = i.categoryName
                             )

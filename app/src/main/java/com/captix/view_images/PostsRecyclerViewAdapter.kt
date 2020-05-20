@@ -1,12 +1,10 @@
 package com.captix.view_images
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.captix.R
@@ -29,6 +27,8 @@ class PostsRecyclerViewAdapter : RecyclerView.Adapter<PostsRecyclerViewAdapter.P
 
         holder.imageTitle.text = post.caption
         holder.userName.text = post.username
+
+        holder.rating.text = "upvote: ${post.upVote}  downvote: ${post.downVote}"
 
         Glide.with(holder.image.context)
             .load(post.imageUrl)
@@ -55,8 +55,6 @@ class PostsRecyclerViewAdapter : RecyclerView.Adapter<PostsRecyclerViewAdapter.P
         val userName: TextView = itemView.textViewOwner
         val image: ImageView = itemView.imageViewImage
         val category: TextView = itemView.textViewCategory
-
-        //val description: TextView = itemView.textViewDescription
         val rating: TextView = itemView.textViewRating
 
         var post: Post? = null

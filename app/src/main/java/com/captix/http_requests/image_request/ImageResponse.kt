@@ -11,7 +11,7 @@ data class ImageResponse(
     @SerializedName("description") var description: String?,
     @SerializedName("dateOfCreation") var dateOfCreation: String,
     @SerializedName("comments") var comments: MutableList<Comment>? = mutableListOf(),
-    @SerializedName("upvote") var upvote: Int,
-    @SerializedName("downvote") var downvote: Int,
+    @SerializedName("upVote") var upVote: Int,
+    @SerializedName("downVote") var downVote: Int,
     @SerializedName("categoryName") var categoryName: String
 )
