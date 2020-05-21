@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.captix.R
 import com.captix.http_requests.comment_request.CommentResponse
 import com.captix.http_requests.comment_request.CommentUpload
+import com.captix.http_requests.vote.Vote
 import com.captix.model.Comment
 import com.captix.retrofit.APIService
 import com.captix.retrofit.ApiUtils
@@ -25,12 +26,18 @@ class DetailViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_view)
 
         val postId = intent.getStringExtra("post_id")
-        val requestUrl = "/posts/${postId}/comments"
+        val requestUrlForComments = "/posts/${postId}/comments"
+        val requestUrlForVotes = "/posts/${postId}/vote"
 
         val mAPIService: APIService?
         mAPIService = ApiUtils.apiService
 
-        mAPIService.getComments(token, requestUrl).enqueue(object :
+        var upVote: Int = intent.getStringExtra("upVote").toInt()
+        var downVote: Int = intent.getStringExtra("downVote").toInt()
+
+        textViewUpDownVote.text = "upvote: $upVote downvote: $downVote"
+
+        mAPIService.getComments(token, requestUrlForComments).enqueue(object :
             Callback<List<CommentResponse>> {
 
             override fun onResponse(
@@ -70,10 +77,10 @@ class DetailViewActivity : AppCompatActivity() {
         })
 
         buttonSendComment.setOnClickListener {
-            if (editTextComment.text.toString() != "") {
+            if (editTextComment.text.toString() != "" && (radioButtonUpvote.isChecked || radioButtonDownvote.isChecked)) {
 
                 val comment = CommentUpload(editTextComment.text.toString())
-                mAPIService.sendComment(token, requestUrl, comment)
+                mAPIService.sendComment(token, requestUrlForComments, comment)
                     .enqueue(object :
                         Callback<CommentResponse> {
 
@@ -116,11 +123,55 @@ class DetailViewActivity : AppCompatActivity() {
                         }
                     })
 
+
+                val voteContent = if (radioButtonUpvote.isChecked) {
+                    "up"
+                } else {
+                    "down"
+                }
+
+                val vote = Vote(voteContent)
+
+                mAPIService.sendVote(token, requestUrlForVotes, vote).enqueue(object :
+                    Callback<Vote> {
+
+                    override fun onResponse(call: Call<Vote>, response: Response<Vote>) {
+
+                        val urlResponse = response.body()
+
+                        if (urlResponse != null) {
+
+
+                            if (urlResponse.vote == "upvote") {
+                                upVote++
+                            } else {
+                                downVote++
+                            }
+
+                            textViewUpDownVote.text = "upvote: $upVote downvote: $downVote"
+                            
+                        }
+
+
+                    }
+
+                    override fun onFailure(call: Call<Vote>, t: Throwable) {
+                        FancyToast.makeText(
+                            applicationContext,
+                            "Server error",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.ERROR,
+                            false
+                        ).show()
+                    }
+                })
+
+
                 editTextComment.text.clear()
             } else {
                 FancyToast.makeText(
                     applicationContext,
-                    "First write something",
+                    "First write something and vote",
                     FancyToast.LENGTH_SHORT,
                     FancyToast.ERROR,
                     false

@@ -39,6 +39,8 @@ class ViewImagesActivity : AppCompatActivity(), PostsRecyclerViewAdapter.PostIte
         startActivity(
             Intent(this, DetailViewActivity::class.java)
                 .putExtra("post_id", post.id)
+                .putExtra("upVote", post.upVote.toString())
+                .putExtra("downVote", post.downVote.toString())
         )
 
     }

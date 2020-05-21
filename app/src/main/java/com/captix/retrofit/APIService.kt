@@ -8,6 +8,7 @@ import com.captix.http_requests.image_upload.ImageUploadSendBack
 import com.captix.http_requests.login.LoginRequest
 import com.captix.http_requests.login.LoginResponse
 import com.captix.http_requests.registration.Registration
+import com.captix.http_requests.vote.Vote
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -41,6 +42,13 @@ interface APIService {
         @Url url: String,
         @Body content: CommentUpload
     ): Call<CommentResponse>
+
+    @POST
+    fun sendVote(
+        @Header("Authorization") authHeader: String,
+        @Url url: String,
+        @Body vote: Vote
+    ): Call<Vote>
 
     @Multipart
     @POST("uploadFile")

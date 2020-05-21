@@ -43,14 +43,14 @@
 
     <EditText
         android:id="@+id/editTextComment"
-        android:layout_width="320dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="312dp"
+        android:layout_height="113dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWriteAComment" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <Button
         android:id="@+id/buttonSendComment"
@@ -61,4 +61,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextComment" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUpDownVote">
+
+        <RadioButton
+            android:id="@+id/radioButtonUpvote"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/upvote"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RadioButton
+            android:id="@+id/radioButtonDownvote"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/downvote" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewUpDownVote"
+        android:layout_width="160dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWriteAComment" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
